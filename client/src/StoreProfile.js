@@ -29,7 +29,7 @@ const StoreProfile = (props) => {
     axios
       .get(`http://localhost:5000/mystore/${infoArgumnt}`)
       .then(async (response) => {
-        setStore(response.data[0]);v
+        setStore(response.data[0]);
       })
       .catch((err) => {
         throw err;
