@@ -58,6 +58,9 @@ const {
 
 const { addpayment } = require("../controllers/payment");
 /***********product*********** */
+mainRouter.get("/test", (req,res)=>res.json("hallo world"));
+
+
 mainRouter.post("/product", addProduct);
 mainRouter.get("/getsearch", searchProduct);
 mainRouter.get("/getproduct/:store_id", getproducts);
