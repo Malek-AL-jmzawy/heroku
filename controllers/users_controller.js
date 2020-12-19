@@ -53,7 +53,7 @@ const login = (req, res) => {
       if (await bcrypt.compare(password, result[0].password)) {
         const {
           user_id,
-          type,
+          // type,
           email,
           first_name,
           last_name,
@@ -62,11 +62,11 @@ const login = (req, res) => {
           birhday,
           phone_number,
           image_profile
-          
+
         } = result[0];
         const payload = {
           user_id,
-          type,
+          // type,
           email,
           first_name,
           last_name,
@@ -79,7 +79,7 @@ const login = (req, res) => {
         const options = {
           expiresIn: process.env.TOKEN_EXPIRATION,
         };
-        const token = jwt.sign(payload, process.env.SECRET, options);
+        const token = await jwt.sign(payload, process.env.SECRET, options);
         res.json(token);
       } else {
         res.json({ error: "Invalid login check your password" });
@@ -112,8 +112,8 @@ const getUserById = (req, res) => {
 
 const updatePic = (req, res) => {
   const query = `UPDATE users SET image_profile=? WHERE user_id=?`;
-  const data =[req.body.image_profile,req.params.user_id]
-  connection.query(query, data,(err, results) => {
+  const data = [req.body.image_profile, req.params.user_id]
+  connection.query(query, data, (err, results) => {
     if (err) {
       throw err;
     }
@@ -121,4 +121,4 @@ const updatePic = (req, res) => {
   });
 };
 
-module.exports = { register, getAllUsers, login, getUserById,updatePic };
+module.exports = { register, getAllUsers, login, getUserById, updatePic };

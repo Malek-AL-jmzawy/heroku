@@ -62,7 +62,10 @@ type varchar(55),
  PRIMARY KEY (role_id)
  );
 
-
+-- DB_HOST=localhost
+-- DB_USER=root
+-- DB_PASS=0000
+-- DB_NAME=project_5
 
 CREATE TABLE users (
 user_id int auto_increment NOT NULL,
