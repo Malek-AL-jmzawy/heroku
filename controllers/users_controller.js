@@ -16,13 +16,13 @@ const register = async (req, res) => {
     email,
     password,
     image_profile,
-    role_id,
+    // role_id,
   } = req.body;
   const hashedPassword = await bcrypt.hash(password, Number(process.env.SALT));
   const data = [
     first_name,
     last_name,
-    role_id,
+    1,
     address,
     city,
     region,
