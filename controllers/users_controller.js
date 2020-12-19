@@ -42,18 +42,18 @@ const register = async (req, res) => {
   });
 };
 
-const login = (req, res) => {
+const login =  (req, res) => {
   const query = `SELECT * ,roles.type FROM roles INNER JOIN users ON 
     users.role_id=roles.role_id WHERE email=? `;
   const { email, password } = req.body;
   const data = [email, password];
   connection.query(query, data, async (err, result) => {
-    if (err) throw err;
+    if (err) res.json(err);
     if (result.length) {
       if (await bcrypt.compare(password, result[0].password)) {
         const {
           user_id,
-          // type,
+          type,
           email,
           first_name,
           last_name,
@@ -62,11 +62,11 @@ const login = (req, res) => {
           birhday,
           phone_number,
           image_profile
-
+          
         } = result[0];
         const payload = {
           user_id,
-          // type,
+          type,
           email,
           first_name,
           last_name,
@@ -79,7 +79,7 @@ const login = (req, res) => {
         const options = {
           expiresIn: process.env.TOKEN_EXPIRATION,
         };
-        const token = await jwt.sign(payload, process.env.SECRET, options);
+        const token = jwt.sign(payload, process.env.SECRET, options);
         res.json(token);
       } else {
         res.json({ error: "Invalid login check your password" });
@@ -112,8 +112,8 @@ const getUserById = (req, res) => {
 
 const updatePic = (req, res) => {
   const query = `UPDATE users SET image_profile=? WHERE user_id=?`;
-  const data = [req.body.image_profile, req.params.user_id]
-  connection.query(query, data, (err, results) => {
+  const data =[req.body.image_profile,req.params.user_id]
+  connection.query(query, data,(err, results) => {
     if (err) {
       throw err;
     }
@@ -121,4 +121,4 @@ const updatePic = (req, res) => {
   });
 };
 
-module.exports = { register, getAllUsers, login, getUserById, updatePic };
+module.exports = { register, getAllUsers, login, getUserById,updatePic };
