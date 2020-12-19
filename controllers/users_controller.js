@@ -43,13 +43,14 @@ const register = async (req, res) => {
 };
 
 const login =  (req, res) => {
-  const query = `SELECT roles.type FROM roles INNER JOIN users ON 
+  const query = `SELECT * ,roles.type FROM roles INNER JOIN users ON 
     users.role_id=roles.role_id WHERE email=? `;
   const { email, password } = req.body;
   const data = [email];
   connection.query(query, data, async (err, result) => {
-    if (err) res.json(err);
+    if (err) console.log(err);;
     if (result.length) {
+      console.log("result",result);
       if (await bcrypt.compare(password, result[0].password)) {
         const {
           user_id,
